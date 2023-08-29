@@ -226,7 +226,8 @@ export class Biometric {
                 if (error) {
                     return this._error.next(error.message)
                 }
-                console.log('adasd', response);
+                
+               /*  console.log('adasd', response); */
                 
                 this._onboardingScan.next(response)
             }

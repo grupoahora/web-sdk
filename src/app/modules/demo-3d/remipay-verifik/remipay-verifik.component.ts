@@ -22,6 +22,8 @@ export class RemipayVerifikComponent implements OnInit {
   baseColor: string = 'red';
   biometricsReady: Boolean;
   selectedFeature: any;
+  externalUser: string = ''; // Declarar la variable
+
   constructor(
     private _biometric: Biometric,
     private _formBuilder: FormBuilder,
@@ -39,11 +41,30 @@ export class RemipayVerifikComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.route.queryParamMap.subscribe(queryParams => {
       const tokenValue = queryParams.get('token');
       console.log("Valor del parámetro 'token':", tokenValue);
 
+      // Dividir el token por el caracter '.'
+      const tokenParts = tokenValue.split('.');
+
+      if (tokenParts.length === 3) {
+        const header = tokenParts[0];
+        const payload = tokenParts[1];
+        const signature = tokenParts[2];
+
+        console.log("Header:", header);
+        console.log("Payload:", payload);
+        console.log("Signature:", signature);
+
+        // Decodificar el payload Base64 para obtener los claims en formato JSON
+        const decodedPayload = atob(payload);
+        const claims = JSON.parse(decodedPayload);
+        this.externalUser = claims['user']['email'];
+        // Aquí puedes acceder a los claims y usarlos según tus necesidades
+      } else {
+        console.error("Token JWT inválido");
+      }
       // Ahora puedes usar 'tokenValue' en tu lógica, como en la llamada HTTP
     });
   }
@@ -55,27 +76,23 @@ export class RemipayVerifikComponent implements OnInit {
     return;
   } */
   startBiometric(): void {
-    let responseVariable; // Variable para almacenar la respuesta
 
-    this._biometric.startEnrollmentDocument('3138811378');
+    // Generar un número aleatorio entre 0 y 999999999
+    const randomExternalUser = Math.floor(Math.random() * 1000000000);
 
-    this._biometric.onboardingScan$.subscribe(response => {
-      responseVariable = response; // Almacenar la respuesta en la variable
+    // Concatenar el número aleatorio con la variable externalUser
+    const concatenatedUser = this.externalUser + randomExternalUser;
 
-      // Realizar la petición POST con la respuesta como datos XML
-      const xmlData = `<data>${responseVariable}</data>`;
-      const headers = new HttpHeaders({ 'Content-Type': 'text/xml' });
+    // Llamar a la función startEnrollmentDocument con el valor concatenado como argumento
+    this._biometric.startEnrollmentDocument(concatenatedUser).then(
+      _ => {
+        console.log(_);
 
-      this._http.post('http://remipay.test/data-verify-3d-liveness', xmlData, { headers }).subscribe(
-        apiResponse => {
-          console.log("Respuesta de la API:", apiResponse);
-        },
-        error => {
-          console.error("Error en la petición a la API:", error);
-        }
-      );
-    }, error => {
-      console.error("Error en el proceso de escaneo:", error);
-    });
+      }
+    );
+    
+    console.log(concatenatedUser);
+
+
   }
 }
