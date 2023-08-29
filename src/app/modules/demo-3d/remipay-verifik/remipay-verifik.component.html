@@ -1,0 +1,16 @@
+
+
+    <div class="wrapper">
+        <div class="mt-2 flex justify-center py-12">
+            <button (click)="startBiometric()"
+                class="flex p-2 mx-4 w-20 justify-center border-solid border-2 rounded-full"
+                [style.background-color]=" baseColor" >
+                <span [style.color]="'white'" >
+                    {{'demo.start' | transloco}}
+                </span>
+        <!--         <mat-progress-spinner *ngIf="!biometricsReady" [diameter]="24" [mode]="'indeterminate'">
+                </mat-progress-spinner> -->
+            </button>
+        </div>
+
+
