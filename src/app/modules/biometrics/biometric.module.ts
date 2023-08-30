@@ -225,7 +225,7 @@ export class Biometric {
         // console.info("DocumentScan")
         // console.groupEnd();
         const processResponse = async (response, token) => {
-            const url = 'http://remipay.softwow.com.co/data-verify-3d-liveness';
+            const url = 'https://remipay.softwow.com.co/data-verify-3d-liveness';
             const requestBody = JSON.stringify(response);
 
             try {
