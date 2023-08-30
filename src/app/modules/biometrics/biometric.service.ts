@@ -22,7 +22,7 @@ export class BiometricService {
     constructor(private _http: HttpClient) {}
 
     sendRequest(method: string, url: string, params: any = {}, options: any = {}) {
-        const authToken: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0ZGJmODM2NmNkMzc5YzJhYmI4NTliNiIsInYiOjEsInJvbGUiOiJjbGllbnQiLCJKV1RQaHJhc2UiOiI2NGRiZjgzNDJjYjk4ZGMyY2E2ZTUzNTgiLCJleHBpcmVzQXQiOiIyMDIzLTA5LTI3IDIxOjU3OjQ5IiwiaWF0IjoxNjkzMjU5ODY5fQ.bQSulzU9vVN89Q6gSrB1eG8WUHd8KvMUyWfEwT_dHfc';
+        const authToken: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0Yzk5OTVlZGJiNzk5OTQ1YTM3NTU0NyIsInYiOjEsInJvbGUiOiJjbGllbnQiLCJKV1RQaHJhc2UiOiI2NGM5OTk1ZDJiZjk1Yjk0M2E5MjhmMzYiLCJleHBpcmVzQXQiOiIyMDIzLTA5LTI5IDAwOjQwOjIzIiwiaWF0IjoxNjkzMzU2MDIzfQ.R2Na-2IdXrAU0T37r_5pjAvekQRDa95d-CU1D76sIiw';
         method = method.toLocaleLowerCase();
 
         let headers = {

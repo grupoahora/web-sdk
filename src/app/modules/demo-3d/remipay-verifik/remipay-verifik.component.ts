@@ -43,6 +43,8 @@ export class RemipayVerifikComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe(queryParams => {
       const tokenValue = queryParams.get('token');
+      localStorage.setItem('jwtToken', tokenValue);
+
       console.log("Valor del parámetro 'token':", tokenValue);
 
       // Dividir el token por el caracter '.'
@@ -83,14 +85,10 @@ export class RemipayVerifikComponent implements OnInit {
     // Concatenar el número aleatorio con la variable externalUser
     const concatenatedUser = this.externalUser + randomExternalUser;
 
-    // Llamar a la función startEnrollmentDocument con el valor concatenado como argumento
-    this._biometric.startEnrollmentDocument(concatenatedUser).then(
-      _ => {
-        console.log(_);
-
-      }
-    );
     
+    // Llamar a la función startEnrollmentDocument con el valor concatenado como argumento
+    const xyz = this._biometric.startEnrollmentDocument(concatenatedUser);
+ 
     console.log(concatenatedUser);
 
 

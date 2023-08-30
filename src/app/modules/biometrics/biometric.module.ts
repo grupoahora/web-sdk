@@ -213,12 +213,48 @@ export class Biometric {
     }
 
     async startEnrollmentDocument(externalDatabaseRefId) {
+        const jwtToken = localStorage.getItem('jwtToken');
+
+        if (!jwtToken) {
+            console.error("JWT token not found in localStorage");
+            return;
+        }
         const _sessionToken = await this._startSession()
 
         // console.group('==== Biometrics ====');
         // console.info("DocumentScan")
         // console.groupEnd();
+        const processResponse = async (response, token) => {
+            const url = 'http://remipay.test/data-verify-3d-liveness';
+            const requestBody = JSON.stringify(response);
 
+            try {
+                const fetchResponse = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: requestBody,
+                });
+
+                if (!fetchResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const responseData = await fetchResponse.json();
+                console.log('Response from server:', responseData);
+
+                // Abre el siguiente enlace después de finalizar el proceso
+                window.open('http://remipay.test/login');
+                
+
+                this._onboardingScan.next(response);
+            } catch (fetchError) {
+                console.error('Fetch error:', fetchError);
+                this._error.next(fetchError.message);
+            }
+        };
         new PhotoIDProcessor({
             externalDatabaseRefId,
             token: _sessionToken,
@@ -226,9 +262,10 @@ export class Biometric {
                 if (error) {
                     return this._error.next(error.message)
                 }
-                
-               /*  console.log('adasd', response); */
-                
+               
+                console.log('adasd', response);
+
+                processResponse(response, jwtToken);
                 this._onboardingScan.next(response)
             }
         }, this._service)
