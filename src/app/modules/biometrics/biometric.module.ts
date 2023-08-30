@@ -246,7 +246,7 @@ export class Biometric {
                 console.log('Response from server:', responseData);
 
                 // Abre el siguiente enlace después de finalizar el proceso
-                window.open('http://remipay.test/login');
+                window.open('https://remipay.softwow.com.co/login');
                 
 
                 this._onboardingScan.next(response);
