@@ -3,11 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false,
-    baseUrl: 'https://demo.verifik.co/',
-    projectId: '6332941ccde4f719d9c00f9e',
-    biometricUrl: 'https://demo.verifik.co/',
-    redirectUrl: 'http://localhost:5666/'
+    production: true,
+    baseUrl: 'https://api.verifik.co/',
+    projectId: '',
+    redirectUrl: 'http://localhost:5666/',
+    biometricUrl: 'https://api.verifik.co/'
     // biometricUrl: 'https://api.verifik.co/'
     // projectId: '6266193db77ccc8111730c90',
 };

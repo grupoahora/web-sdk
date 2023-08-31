@@ -110,7 +110,7 @@ export class Biometric {
             
             
             setConfig(FaceTecSDK)
-          /*   console.log(response); */
+            console.log(config);
 
             FaceTecSDK.initializeInProductionMode(config[0], config[1], config[2], (isBiometricLibReady) => {
                 console.group('==== Biometrics ====');
